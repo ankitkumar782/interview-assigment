@@ -5,11 +5,26 @@ const { sendmessage } = require('../utils/sendmessage');
 
 exports.addlist=async(req,res,next)=>{
     try{
-        console.log(req.body)
+        
         const data={
             url:req.body.url
         }
-          const resdata = await new listmodal(data).save();
+        // if(req.body.url.includes('666')){
+        //      data={
+        //         url:req.body.url,
+        //         threatscore:"notsafe"
+        //      }
+        // }
+        // else{
+        //       data={
+        //         url:req.body.url,
+        //         threatscore:"safe"
+        //      }  
+        // }
+
+        console.log(data)
+          await new listmodal(data).save();
+          const resdata=await listmodal.find()
           console.log(resdata)
                 if (resdata) {
                         res.status(200).json(sendmessage("sucess", "inserted", resdata))

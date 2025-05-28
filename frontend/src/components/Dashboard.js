@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { addlist } from "../api/api";
 
 export default function Dashboard (){
  const [input, setInput] = useState('');
@@ -6,18 +7,23 @@ export default function Dashboard (){
 
   const isMalicious = () => Math.random() > 0.7; // 30% chance of being "Malicious"
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     if (!input.trim()) return;
 
     const newEntry = {
-      id: Date.now(),
-      value: input.trim(),
-      threatScore: isMalicious() ? 'Malicious' : 'Safe',
+      
+      url: input.trim(),
+      
     };
+    console.log(newEntry)
 
-    setEntries([newEntry, ...entries]);
-    setInput('');
+    
+    // setInput('');
+
+    const res= await addlist(newEntry)
+    setEntries(res.data);
+    // console.log(entries)
 
 
     
@@ -46,8 +52,8 @@ export default function Dashboard (){
         </thead>
         <tbody>
           {entries.map((entry) => (
-            <tr key={entry.id}>
-              <td>{entry.value}</td>
+            <tr key={entry._id}>
+              <td>{entry.url}</td>
               <td className={entry.threatScore === 'Malicious' ? 'malicious' : 'safe'}>
                 {entry.threatScore}
               </td>
