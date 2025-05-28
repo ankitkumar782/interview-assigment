@@ -7,7 +7,8 @@ exports.addlist=async(req,res,next)=>{
     try{
         
         const data={
-            url:req.body.url
+            url:req.body.url,
+            threat:req.body.threat
         }
         // if(req.body.url.includes('666')){
         //      data={
